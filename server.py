@@ -1,7 +1,64 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import sqlite3
 
 app = Flask(__name__)
+
+
+# FRONTEND PAGE ROUTES
+
+@app.route("/", methods=["GET"])
+def home():
+    connection = sqlite3.connect("budget_manager.db")
+    connection.row_factory = sqlite3.Row
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM expenses
+        ORDER BY expense_date DESC, expense_id DESC
+    """)
+    expenses = cursor.fetchall()
+
+    connection.close()
+
+    total_expenses = sum(expense["amount"] for expense in expenses)
+    expense_count = len(expenses)
+    recent_expenses = expenses[:5]
+
+    return render_template(
+        "home.html",
+        total_expenses=total_expenses,
+        expense_count=expense_count,
+        recent_expenses=recent_expenses
+    )
+
+
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
+
+
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
+
+        print("Contact form submitted:")
+        print(f"Name: {name}")
+        print(f"Email: {email}")
+        print(f"Message: {message}")
+
+        return render_template(
+            "contact.html",
+            success_message=f"Thank you, {name}! Your message was submitted."
+        )
+
+    return render_template("contact.html")
+
+
+# API HEALTH CHECK
 
 @app.route("/api/health", methods=["GET"])
 def health_check():
@@ -9,6 +66,7 @@ def health_check():
 
 
 # GET ALL EXPENSES
+
 @app.route("/api/expenses", methods=["GET"])
 def get_expenses():
     connection = sqlite3.connect("budget_manager.db")
@@ -23,9 +81,10 @@ def get_expenses():
     expenses_list = [dict(expense) for expense in expenses]
 
     return jsonify(expenses_list), 200
-    
+
 
 # GET ONE EXPENSE
+
 @app.route("/api/expenses/<int:expense_id>", methods=["GET"])
 def get_expense(expense_id):
     connection = sqlite3.connect("budget_manager.db")
@@ -47,6 +106,7 @@ def get_expense(expense_id):
 
 
 # UPDATE EXPENSE
+
 @app.route("/api/expenses/<int:expense_id>", methods=["PUT"])
 def update_expense(expense_id):
     data = request.get_json()
@@ -100,7 +160,9 @@ def update_expense(expense_id):
 
     return jsonify({"message": "Expense updated successfully"}), 200
 
+
 # DELETE EXPENSE
+
 @app.route("/api/expenses/<int:expense_id>", methods=["DELETE"])
 def delete_expense(expense_id):
     connection = sqlite3.connect("budget_manager.db")

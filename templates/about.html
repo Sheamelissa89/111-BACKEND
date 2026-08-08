@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}About | Budget Manager{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <p class="eyebrow">About the project</p>
+    <h1>Financial organization made approachable.</h1>
+
+    <p>
+        Budget Manager is a full-stack web application designed to
+        help users organize expenses and better understand where their
+        money is going.
+    </p>
+</section>
+
+<section class="about-section">
+    <div class="about-story">
+        <p class="eyebrow">The purpose</p>
+        <h2>Why I created Budget Manager</h2>
+
+        <p>
+            Managing financial information can become overwhelming when
+            records are scattered or difficult to understand. I created
+            Budget Manager to provide a clear, simple, and approachable
+            system for reviewing expense information.
+        </p>
+
+        <p>
+            The application connects an original frontend design with a
+            Flask backend and SQLite database. Each part of the project
+            works together to create a complete user experience.
+        </p>
+    </div>
+
+    <aside class="project-highlight">
+        <p class="card-label">Project goal</p>
+        <h2>Clarity creates confidence.</h2>
+
+        <p>
+            This project transforms stored financial data into
+            information that users can understand and act upon.
+        </p>
+    </aside>
+</section>
+
+<section class="competencies-section">
+    <div class="section-heading">
+        <p class="eyebrow">Demonstrated competencies</p>
+        <h2>How the application was built</h2>
+    </div>
+
+    <div class="competency-grid">
+        <article class="competency-card">
+            <span>01</span>
+            <h3>Flask Routing</h3>
+            <p>
+                Python routes receive browser requests and return HTML
+                pages or JSON responses.
+            </p>
+        </article>
+
+        <article class="competency-card">
+            <span>02</span>
+            <h3>Jinja Templates</h3>
+            <p>
+                Template inheritance creates a consistent layout while
+                allowing each page to contain unique content.
+            </p>
+        </article>
+
+        <article class="competency-card">
+            <span>03</span>
+            <h3>SQLite Database</h3>
+            <p>
+                Expense records are retrieved, updated, and deleted
+                through parameterized SQL commands.
+            </p>
+        </article>
+
+        <article class="competency-card">
+            <span>04</span>
+            <h3>Responsive Design</h3>
+            <p>
+                Custom HTML and CSS produce an accessible layout that
+                adapts to different screen sizes.
+            </p>
+        </article>
+    </div>
+</section>
+
+<section class="technology-banner">
+    <p class="eyebrow">Technology stack</p>
+    <h2>HTML · CSS · Jinja · Flask · Python · SQL · SQLite</h2>
+</section>
+{% endblock %}

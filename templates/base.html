@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Budget Manager{% endblock %}</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='styles.css') }}"
+    >
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a class="logo" href="{{ url_for('home') }}">
+                Budget Manager
+            </a>
+
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Budget Manager | Created by Shea Mullin</p>
+    </footer>
+</body>
+</html>

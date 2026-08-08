@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Budget Manager{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <p class="eyebrow">Take control of your finances</p>
+
+        <h1>Make every dollar make sense.</h1>
+
+        <p class="hero-description">
+            Budget Manager gives you a simple and organized way to
+            review expenses, understand spending habits, and make
+            informed financial decisions.
+        </p>
+
+        <a class="primary-button" href="#features">
+            Explore Features
+        </a>
+    </div>
+
+    <div class="hero-card">
+        <p class="card-label">Financial overview</p>
+        <h2>Clear. Simple. Organized.</h2>
+
+        <div class="mini-stat">
+            <span>Track expenses</span>
+            <strong>✓</strong>
+        </div>
+
+        <div class="mini-stat">
+            <span>Review categories</span>
+            <strong>✓</strong>
+        </div>
+
+        <div class="mini-stat">
+            <span>Build better habits</span>
+            <strong>✓</strong>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="features-section">
+    <div class="section-heading">
+        <p class="eyebrow">Core features</p>
+        <h2>Everything you need in one place</h2>
+    </div>
+
+    <div class="feature-grid">
+        <article class="feature-card">
+            <div class="feature-icon">$</div>
+            <h3>Expense Tracking</h3>
+            <p>
+                Keep financial records organized with descriptions,
+                amounts, categories, and dates.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon">#</div>
+            <h3>Smart Categories</h3>
+            <p>
+                Group expenses into useful categories so spending
+                patterns are easier to understand.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3>Reliable Records</h3>
+            <p>
+                Store expense information in a SQLite database powered
+                by a Flask backend.
+            </p>
+        </article>
+    </div>
+</section>
+
+<section class="technology-section">
+    <div>
+        <p class="eyebrow">Built from front to back</p>
+        <h2>A complete Flask application</h2>
+    </div>
+
+    <p>
+        This project combines HTML, CSS, Jinja template inheritance,
+        Flask routes, Python, SQL, and SQLite to create one connected
+        application.
+    </p>
+</section>
+<section class="dashboard-section">
+    <div class="section-heading">
+        <p class="eyebrow">Live database overview</p>
+        <h2>Your expense dashboard</h2>
+    </div>
+
+    <div class="summary-grid">
+        <article class="summary-card">
+            <p>Total recorded expenses</p>
+            <h3>${{ "%.2f"|format(total_expenses) }}</h3>
+        </article>
+
+        <article class="summary-card">
+            <p>Number of records</p>
+            <h3>{{ expense_count }}</h3>
+        </article>
+    </div>
+
+    <div class="expense-table-container">
+        <div class="table-heading">
+            <div>
+                <p class="eyebrow">Recent activity</p>
+                <h3>Latest expenses</h3>
+            </div>
+
+            <span>{{ expense_count }} total records</span>
+        </div>
+
+        {% if recent_expenses %}
+            <div class="table-wrapper">
+                <table class="expense-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for expense in recent_expenses %}
+                            <tr>
+                                <td>{{ expense["description"] }}</td>
+                                <td>
+                                    <span class="category-badge">
+                                        {{ expense["category"] }}
+                                    </span>
+                                </td>
+                                <td>{{ expense["expense_date"] }}</td>
+                                <td class="amount">
+                                    ${{ "%.2f"|format(expense["amount"]) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>No expenses found</h3>
+                <p>Add expense records to begin building your dashboard.</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
